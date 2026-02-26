@@ -15,13 +15,15 @@ import { Eye, Edit } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface NewThreadFormProps {
-  categories: Category[];
+  categories?: Category[];
   defaultCategoryId?: string;
+  preselectedCategoryId?: string;
 }
 
 export default function NewThreadForm({
-  categories,
+  categories = [],
   defaultCategoryId,
+  preselectedCategoryId,
 }: NewThreadFormProps) {
   const { user } = useAuth();
   const router = useRouter();
@@ -29,7 +31,7 @@ export default function NewThreadForm({
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [categoryId, setCategoryId] = useState(defaultCategoryId ?? "");
+  const [categoryId, setCategoryId] = useState(preselectedCategoryId ?? defaultCategoryId ?? "");
   const [loading, setLoading] = useState(false);
   const [previewMode, setPreviewMode] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});

@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { MessageSquare, Clock } from "lucide-react";
+import { Clock } from "lucide-react";
 import type { CategoryWithStats } from "@/lib/types/database";
 import { formatRelativeTime } from "@/lib/utils";
+import Avatar from "@/components/ui/Avatar";
 
 interface CategoryCardProps {
   category: CategoryWithStats;
@@ -9,46 +10,64 @@ interface CategoryCardProps {
 
 export default function CategoryCard({ category }: CategoryCardProps) {
   return (
-    <Link
-      href={`/category/${category.slug}`}
-      className="group block bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 hover:border-indigo-300 dark:hover:border-indigo-700 hover:shadow-md transition-all duration-200"
-    >
-      {/* Header */}
-      <div className="flex items-start gap-3 mb-3">
-        <div
-          className="w-10 h-10 rounded-lg flex items-center justify-center text-xl flex-shrink-0"
-          style={{ backgroundColor: `${category.color ?? "#6366f1"}20` }}
-        >
-          {category.icon ?? "💬"}
-        </div>
-        <div className="min-w-0">
-          <h3
-            className="font-semibold text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors truncate"
-            style={{ color: undefined }}
+    <tr className="border-b border-gray-700/50 hover:bg-white/5 transition-colors">
+      {/* Category info */}
+      <td className="py-3 px-4">
+        <div className="flex items-center gap-3">
+          <div
+            className="w-9 h-9 rounded flex items-center justify-center text-lg flex-shrink-0"
+            style={{ backgroundColor: `${category.color ?? "#2a9d8f"}25` }}
           >
-            {category.name}
-          </h3>
-          {category.description && (
-            <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 mt-0.5">
-              {category.description}
-            </p>
-          )}
-        </div>
-      </div>
-
-      {/* Stats */}
-      <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-gray-800">
-        <div className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
-          <MessageSquare className="w-3.5 h-3.5" />
-          <span>{(category.thread_count ?? 0).toLocaleString()} threads</span>
-        </div>
-        {category.latest_thread && (
-          <div className="flex items-center gap-1 text-xs text-gray-400 dark:text-gray-500">
-            <Clock className="w-3 h-3" />
-            <span>{formatRelativeTime(category.latest_thread.created_at)}</span>
+            {category.icon ?? "💬"}
           </div>
+          <div>
+            <Link
+              href={`/category/${category.slug}`}
+              className="font-semibold text-white hover:text-teal-400 transition-colors text-sm"
+            >
+              {category.name}
+            </Link>
+            {category.description && (
+              <p className="text-xs text-gray-400 mt-0.5 line-clamp-1">
+                {category.description}
+              </p>
+            )}
+          </div>
+        </div>
+      </td>
+      {/* Thread count */}
+      <td className="py-3 px-4 text-center">
+        <span className="text-sm text-gray-300 font-medium">
+          {(category.thread_count ?? 0).toLocaleString()}
+        </span>
+        <p className="text-xs text-gray-500">threads</p>
+      </td>
+      {/* Last post */}
+      <td className="py-3 px-4 hidden sm:table-cell">
+        {category.latest_thread ? (
+          <div className="flex items-center gap-2">
+            <Avatar
+              src={category.latest_thread.author?.avatar_url}
+              alt={category.latest_thread.author?.username ?? ""}
+              size="xs"
+            />
+            <div className="min-w-0">
+              <Link
+                href={`/thread/${category.latest_thread.slug}`}
+                className="text-xs text-gray-300 hover:text-teal-400 truncate block max-w-[140px] transition-colors"
+              >
+                {category.latest_thread.title}
+              </Link>
+              <p className="text-xs text-gray-500 flex items-center gap-1 mt-0.5">
+                <Clock className="w-2.5 h-2.5" />
+                {formatRelativeTime(category.latest_thread.created_at)}
+              </p>
+            </div>
+          </div>
+        ) : (
+          <span className="text-xs text-gray-500">No posts yet</span>
         )}
-      </div>
-    </Link>
+      </td>
+    </tr>
   );
 }

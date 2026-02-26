@@ -1,6 +1,6 @@
-# ForumHub 💬
+# PumpTalk ⚡
 
-A modern, fully functional community forums web application built with Next.js 14, Supabase, and Tailwind CSS.
+A dark-themed community forum for crypto degens built with Next.js, Supabase, and Tailwind CSS.
 
 ## Screenshots
 

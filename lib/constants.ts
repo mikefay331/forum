@@ -1,5 +1,5 @@
-export const APP_NAME = "ForumHub";
-export const APP_DESCRIPTION = "A modern community discussion platform";
+export const APP_NAME = "PumpTalk";
+export const APP_DESCRIPTION = "Where Degens Talk";
 export const THREADS_PER_PAGE = 10;
 export const POSTS_PER_PAGE = 20;
 

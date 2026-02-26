@@ -7,6 +7,7 @@ export interface Profile {
   avatar_url: string | null;
   bio: string | null;
   role: UserRole;
+  is_shoutbox_banned?: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -19,6 +20,8 @@ export interface Category {
   icon: string | null;
   color: string | null;
   sort_order: number;
+  is_admin_only?: boolean;
+  category_group?: string | null;
   created_at: string;
 }
 
@@ -72,6 +75,54 @@ export interface PostWithDetails extends Post {
 export interface CategoryWithStats extends Category {
   thread_count?: number;
   latest_thread?: ThreadWithDetails;
+}
+
+export interface Advertisement {
+  id: string;
+  title: string;
+  image_url: string;
+  link_url: string;
+  description: string | null;
+  is_active: boolean;
+  sort_order: number;
+  created_at: string;
+}
+
+export interface ShoutboxMessage {
+  id: string;
+  user_id: string;
+  content: string;
+  channel: string;
+  created_at: string;
+  author?: Profile;
+}
+
+export interface Conversation {
+  id: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ConversationParticipant {
+  id: string;
+  conversation_id: string;
+  user_id: string;
+}
+
+export interface DirectMessage {
+  id: string;
+  conversation_id: string;
+  sender_id: string;
+  content: string;
+  is_read: boolean;
+  created_at: string;
+  sender?: Profile;
+}
+
+export interface ConversationWithDetails extends Conversation {
+  participants: (ConversationParticipant & { profile: Profile })[];
+  last_message?: DirectMessage;
+  unread_count?: number;
 }
 
 export type Database = {

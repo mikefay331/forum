@@ -4,8 +4,10 @@
 @variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #1a1f2e;
+  --foreground: #e2e8f0;
+  --card-bg: #1e2537;
+  --accent: #2a9d8f;
 }
 
 body {
