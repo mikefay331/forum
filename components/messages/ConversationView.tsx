@@ -38,7 +38,7 @@ export default function ConversationView({ conversationId, currentUserId, otherU
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const supabase = createClient();
+  const supabase = useRef(createClient()).current;
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });

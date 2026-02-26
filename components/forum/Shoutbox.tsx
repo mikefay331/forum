@@ -17,7 +17,7 @@ export default function Shoutbox() {
   const [loading, setLoading] = useState(false);
   const [hasTable, setHasTable] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const supabase = createClient();
+  const supabase = useRef(createClient()).current;
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });

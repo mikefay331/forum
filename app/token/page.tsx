@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { ExternalLink, Zap } from "lucide-react";
+import Link from "next/link";
 import CopyButton from "@/components/ui/CopyButton";
 
 export const metadata: Metadata = { title: "Token | PumpTalk" };
@@ -46,12 +47,12 @@ export default function TokenPage() {
           <ExternalLink className="w-4 h-4" />
           Twitter / X
         </a>
-        <a
+        <Link
           href="/"
           className="flex items-center gap-2 px-5 py-2.5 rounded font-semibold text-sm text-white border border-teal-500/50 hover:border-teal-400 transition-colors"
         >
           Back to Forum
-        </a>
+        </Link>
       </div>
 
       {/* Tokenomics */}
