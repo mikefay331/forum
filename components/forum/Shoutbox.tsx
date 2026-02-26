@@ -7,6 +7,7 @@ import Avatar from "@/components/ui/Avatar";
 import { formatRelativeTime } from "@/lib/utils";
 import type { ShoutboxMessage } from "@/lib/types/database";
 import { Send, MessageSquare } from "lucide-react";
+import { showToast } from "@/components/ui/Toast";
 
 export default function Shoutbox() {
   const { user } = useAuth();
@@ -78,11 +79,15 @@ export default function Shoutbox() {
     if (!input.trim() || !user || loading) return;
     setLoading(true);
     try {
-      await supabase.from("shoutbox_messages").insert({
+      const { error } = await supabase.from("shoutbox_messages").insert({
         user_id: user.id,
         content: input.trim(),
         channel,
       });
+      if (error) {
+        showToast(error.message, "error");
+        return;
+      }
       setInput("");
     } finally {
       setLoading(false);

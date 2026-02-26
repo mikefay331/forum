@@ -6,6 +6,7 @@ import Avatar from "@/components/ui/Avatar";
 import { formatRelativeTime } from "@/lib/utils";
 import { Send, ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { showToast } from "@/components/ui/Toast";
 
 interface Message {
   id: string;
@@ -72,11 +73,15 @@ export default function ConversationView({ conversationId, currentUserId, otherU
     if (!input.trim() || loading) return;
     setLoading(true);
     try {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("direct_messages")
         .insert({ conversation_id: conversationId, sender_id: currentUserId, content: input.trim() })
         .select("*, sender:profiles(id, username, display_name, avatar_url, role)")
         .single();
+      if (error) {
+        showToast(error.message, "error");
+        return;
+      }
       if (data) setMessages((prev) => [...prev, data as Message]);
       setInput("");
     } finally {

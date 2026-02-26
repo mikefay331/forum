@@ -156,6 +156,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS direct_messages_update_conversation ON direct_messages;
 CREATE OR REPLACE TRIGGER direct_messages_update_conversation
   AFTER INSERT ON direct_messages
   FOR EACH ROW EXECUTE FUNCTION update_conversation_updated_at();

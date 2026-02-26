@@ -3,6 +3,7 @@ import type { CategoryWithStats } from "@/lib/types/database";
 import EmptyState from "@/components/ui/EmptyState";
 import { LayoutGrid, MessageSquare } from "lucide-react";
 import Link from "next/link";
+import { APP_NAME } from "@/lib/constants";
 
 interface CategoryListProps {
   categories: CategoryWithStats[];
@@ -56,7 +57,7 @@ export default function CategoryList({ categories }: CategoryListProps) {
         <div className="rounded-lg overflow-hidden border border-gray-700/50" style={{ background: "#1e2537" }}>
           <div className="px-4 py-2.5 flex items-center gap-2" style={{ background: "#2a9d8f20", borderBottom: "1px solid #2a9d8f40" }}>
             <MessageSquare className="w-4 h-4 text-teal-400" />
-            <span className="text-sm font-semibold text-teal-300">PumpTalk Forums</span>
+            <span className="text-sm font-semibold text-teal-300">{APP_NAME} Forums</span>
           </div>
           {renderTable(ungrouped)}
         </div>
